@@ -1,0 +1,8 @@
+.vscode
+.cache
+dist
+node_modules
+*.prettierrc
+.prettierrc
+config.codekit3
+package-lock.json
