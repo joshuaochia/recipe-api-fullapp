@@ -1,44 +1,61 @@
-import * as model from './model.js';
-import recipeView from './views/recipeView.js';
-import SearchView from './views/searchView';
+// Runtime import
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime/runtime';
+
+// Model state import
+import * as model from './models.js';
+
+// Helper Imports
+import * as helper from './helper.js';
+
+// Config Imports
+import { API_URL } from './config.js';
+
+// View import
+import recipeView from './views/recipeView.js';
 import searchView from './views/searchView';
-const recipeContainer = document.querySelector('.recipe');
+import resultView from './views/resultView.js';
 
-const URL = `https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886`;
-// https://forkify-api.herokuapp.com/v2
+/////////////////////////////////////// Code start here
 
-///////////////////////////////////////
-
+// Controller for rendering recipe results
 const showRecipe = async function () {
   try {
-    // 1. Getting hash id - if nothing, return
     const id = window.location.hash.slice(1);
 
     if (!id) return;
-    // 3. Fetching data from API and inserting it to index.html
-    recipeView.showSpinner();
-    await model.loadRecipe(id);
+
+    // Show spinner
+    recipeView.ShowSpinner();
+
+    // Fetch, put data on models, and render the data to view
+
+    await model.recipeModel(id);
+    resultView.render(model.state.search.results);
     recipeView.render(model.state.recipe);
   } catch (err) {
     recipeView.renderError();
   }
 };
 
-const controlSearchResult = async function () {
+// Controller for search results and data
+const searchRecipe = async function () {
   try {
+    resultView.ShowSpinner();
     const query = searchView.getQuery();
-    if (!query) return;
-    await model.loadSearchResult('pizza');
-    searchView.clearInput();
-    console.log(model.state.search.results);
-  } catch (err) {}
+    await model.searchModel(query);
+
+    resultView.render(model.state.search.results);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
+// Init function
 const init = function () {
-  recipeView.addHandlerRender(showRecipe);
-  searchView.addHanderSearch(controlSearchResult);
+  recipeView.addEventHandler(showRecipe);
+  searchView.addEventHandler(searchRecipe);
 };
+
 init();
