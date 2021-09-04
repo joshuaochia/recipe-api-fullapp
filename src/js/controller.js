@@ -6,21 +6,16 @@ import { async } from 'regenerator-runtime/runtime';
 // Model state import
 import * as model from './models.js';
 
-// Helper Imports
-import * as helper from './helper.js';
-
-// Config Imports
-import { API_URL } from './config.js';
-
 // View import
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView';
 import resultView from './views/resultView.js';
+import paginationView from './views/paginationView.js';
 
 /////////////////////////////////////// Code start here
 
 // Controller for rendering recipe results
-const showRecipe = async function () {
+const showRecipeController = async function () {
   try {
     const id = window.location.hash.slice(1);
 
@@ -29,10 +24,12 @@ const showRecipe = async function () {
     // Show spinner
     recipeView.ShowSpinner();
 
-    // Fetch, put data on models, and render the data to view
-
+    // Fetch data from API
     await model.recipeModel(id);
+    // Re render search result for clicked recipe
     resultView.render(model.state.search.results);
+
+    // render data from model to view
     recipeView.render(model.state.recipe);
   } catch (err) {
     recipeView.renderError();
@@ -40,22 +37,34 @@ const showRecipe = async function () {
 };
 
 // Controller for search results and data
-const searchRecipe = async function () {
+const searchRecipeController = async function () {
   try {
+    // Show snipper
     resultView.ShowSpinner();
+
+    // Get the query from search input
     const query = searchView.getQuery();
+
+    // Fetch data from api and save
     await model.searchModel(query);
 
-    resultView.render(model.state.search.results);
+    // Render data from model to view
+    resultView.render(model.goToPage());
+
+    // Make the pagination
+    paginationView.render(model.state.search);
   } catch (err) {
-    console.log(err);
+    alert(err);
   }
 };
 
+const paginationController = function () {};
+
 // Init function
 const init = function () {
-  recipeView.addEventHandler(showRecipe);
-  searchView.addEventHandler(searchRecipe);
+  recipeView.addEventHandler(showRecipeController);
+  searchView.addEventHandler(searchRecipeController);
+  paginationView.addEventHandler(paginationController);
 };
 
 init();
