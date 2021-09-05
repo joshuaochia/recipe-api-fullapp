@@ -27,12 +27,13 @@ const showRecipeController = async function () {
     // Fetch data from API
     await model.recipeModel(id);
     // Re render search result for clicked recipe
-    resultView.render(model.state.search.results);
+    if (!model.state.search.results)
+      resultView.render(model.state.search.results);
 
     // render data from model to view
     recipeView.render(model.state.recipe);
   } catch (err) {
-    recipeView.renderError();
+    throw err;
   }
 };
 
@@ -54,15 +55,30 @@ const searchRecipeController = async function () {
     // Make the pagination
     paginationView.render(model.state.search);
   } catch (err) {
-    alert(err);
+    throw err;
   }
 };
 
-const paginationController = function () {};
+const paginationController = function (page) {
+  // Render data from model to view
+  resultView.render(model.goToPage(page));
+
+  // Make the pagination button
+  paginationView.render(model.state.search);
+};
+
+const updateServingsController = function (newServings) {
+  // Update the servings number in model
+  model.updateServings(newServings);
+
+  // Render the recipe with the new servings
+  recipeView.render(model.state.recipe);
+};
 
 // Init function
 const init = function () {
   recipeView.addEventHandler(showRecipeController);
+  recipeView.addUpdateServingsHandler(updateServingsController);
   searchView.addEventHandler(searchRecipeController);
   paginationView.addEventHandler(paginationController);
 };

@@ -10,7 +10,6 @@ export default class View {
 
     // Clearing the inner html
     this.clearParent();
-    console.log(this._data);
 
     // Generate a html code
     const markup = this._generateMarkup();
@@ -28,10 +27,6 @@ export default class View {
 
     this._parentElement.innerHTML = '';
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
-  }
-
-  addEventHandler(handler) {
-    this._handlerList.forEach(event => window.addEventListener(event, handler));
   }
 
   clearParent() {
