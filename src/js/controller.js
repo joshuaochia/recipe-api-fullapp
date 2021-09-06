@@ -27,8 +27,7 @@ const showRecipeController = async function () {
     // Fetch data from API
     await model.recipeModel(id);
     // Re render search result for clicked recipe
-    if (!model.state.search.results)
-      resultView.render(model.state.search.results);
+    resultView.render(model.state.search.results);
 
     // render data from model to view
     recipeView.render(model.state.recipe);
