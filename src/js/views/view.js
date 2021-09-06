@@ -1,12 +1,10 @@
 import icons from '../../img/icons.svg';
 
 export default class View {
-  render(recipe) {
-    //  Settings recipe data to private var
-
-    if (!recipe || (Array.isArray(recipe) && recipe.length === 0))
+  render(data) {
+    if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
-    this._data = recipe;
+    this._data = data;
 
     // Clearing the inner html
     this.clearParent();
@@ -17,6 +15,8 @@ export default class View {
     // Insert html
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
+
+  update(data) {}
 
   ShowSpinner() {
     const markup = `<div class="spinner">
