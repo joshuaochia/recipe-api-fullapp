@@ -29,10 +29,11 @@ export default class View {
     const newDOM = document.createRange().createContextualFragment(newMarkup);
     const newElements = Array.from(newDOM.querySelectorAll('*'));
     const curElement = Array.from(this._parentElement.querySelectorAll('*'));
+
     newElements.forEach((El, index) => {
       const curEl = curElement[index];
 
-      if (!El.isEqualNode(curEl) && El.firstChild.nodeValue?.trim() !== '') {
+      if (!El.isEqualNode(curEl) && El.firstChild?.nodeValue?.trim() !== '') {
         curEl.textContent = El.textContent;
       }
 
