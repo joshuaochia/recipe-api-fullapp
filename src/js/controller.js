@@ -27,8 +27,7 @@ const showRecipeController = async function () {
     // Fetch data from API
     await model.recipeModel(id);
     // Re render search result for clicked recipe
-    if (!model.state.search.results)
-      resultView.render(model.state.search.results);
+    resultView.render(model.state.search.results);
 
     // render data from model to view
     recipeView.render(model.state.recipe);
@@ -72,13 +71,24 @@ const updateServingsController = function (newServings) {
   model.updateServings(newServings);
 
   // Render the recipe with the new servings
-  recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
+};
+
+const addBookmarkController = function () {
+  // Add bookmarked recipe to model
+
+  if (!model.state.recipe.bookmarked) model.addBookmarks(model.state.recipe);
+  else model.delBookmark(model.state.recipe.id);
+
+  // Update the recipe bookmark icon
+  recipeView.update(model.state.recipe);
 };
 
 // Init function
 const init = function () {
   recipeView.addEventHandler(showRecipeController);
   recipeView.addUpdateServingsHandler(updateServingsController);
+  recipeView.addBookmarkHandler(addBookmarkController);
   searchView.addEventHandler(searchRecipeController);
   paginationView.addEventHandler(paginationController);
 };

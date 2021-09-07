@@ -16,6 +16,7 @@ export const state = {
     page: START_PAGINATION_PAGE,
     resultPerPage: RESULT_PER_PAGE,
   },
+  bookmarks: [],
 };
 
 // Fetching the recipe data from API
@@ -33,6 +34,10 @@ export const recipeModel = async function (id) {
       imageURL: recipe.image_url,
       sourceURL: recipe.source_url,
     };
+
+    if (state.bookmarks.some(bookmark => bookmark.id === id))
+      state.recipe.bookmarked = true;
+    else state.recipe.bookmarked = false;
   } catch (err) {
     throw err;
   }
@@ -42,8 +47,6 @@ export const recipeModel = async function (id) {
 export const searchModel = async function (query) {
   try {
     const data = await helper.renderRecipeJSON(`?search=${query}`);
-
-    console.log(data);
 
     state.search.results = data.data.recipes.map(rec => {
       return {
@@ -69,10 +72,23 @@ export const goToPage = function (page = state.search.page) {
 };
 
 export const updateServings = function (newServings) {
-  console.log(newServings);
   state.recipe.ingredients.forEach(ing => {
     ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
   });
   state.recipe.servings = newServings;
-  console.log(state.recipe);
+};
+
+export const addBookmarks = function (recipe) {
+  // Add bookmark
+  state.bookmarks.push(recipe);
+
+  // Mark current recipe as bookmarks
+  if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+};
+
+export const delBookmark = function (id) {
+  const index = state.bookmarks.findIndex(el => el.id === id);
+  state.bookmarks.splice(index, 1);
+
+  if (id === state.recipe.id) state.recipe.bookmarked = false;
 };
