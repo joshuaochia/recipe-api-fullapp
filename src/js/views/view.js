@@ -1,7 +1,7 @@
 import icons from '../../img/icons.svg';
 
 export default class View {
-  render(data) {
+  render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
     this._data = data;
@@ -11,6 +11,8 @@ export default class View {
 
     // Generate a html code
     const markup = this._generateMarkup();
+
+    if (!render) return markup;
 
     // Insert html
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
