@@ -12,7 +12,7 @@ import searchView from './views/searchView';
 import resultView from './views/resultView.js';
 import paginationView from './views/paginationView.js';
 import bookmarkView from './views/bookmarksView.js';
-import bookmarksView from './views/bookmarksView.js';
+import addrecipeView from './views/addrecipeView';
 
 /////////////////////////////////////// Code start here
 
@@ -30,6 +30,7 @@ const showRecipeController = async function () {
     await model.recipeModel(id);
     // Update actions
     resultView.render(model.state.search.results);
+
     bookmarkView.update(model.state.bookmarks);
 
     // render data from model to view
@@ -90,13 +91,24 @@ const addBookmarkController = function () {
   bookmarkView.render(model.state.bookmarks);
 };
 
+const bookmarksController = function () {
+  bookmarkView.render(model.state.bookmarks);
+};
+
+const controllAddRecipe = function (newRecipe) {
+  console.log(newRecipe);
+
+  // Upload the new recipe
+};
 // Init function
 const init = function () {
+  bookmarkView.addHandlerRender(bookmarksController);
   recipeView.addEventHandler(showRecipeController);
   recipeView.addUpdateServingsHandler(updateServingsController);
   recipeView.addBookmarkHandler(addBookmarkController);
   searchView.addEventHandler(searchRecipeController);
   paginationView.addEventHandler(paginationController);
+  addrecipeView.addHandlerUpload(controllAddRecipe);
 };
 
 init();
