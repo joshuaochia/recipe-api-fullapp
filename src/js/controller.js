@@ -11,6 +11,8 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView';
 import resultView from './views/resultView.js';
 import paginationView from './views/paginationView.js';
+import bookmarkView from './views/bookmarksView.js';
+import addrecipeView from './views/addrecipeView';
 
 /////////////////////////////////////// Code start here
 
@@ -26,8 +28,10 @@ const showRecipeController = async function () {
 
     // Fetch data from API
     await model.recipeModel(id);
-    // Re render search result for clicked recipe
+    // Update actions
     resultView.render(model.state.search.results);
+
+    bookmarkView.update(model.state.bookmarks);
 
     // render data from model to view
     recipeView.render(model.state.recipe);
@@ -75,22 +79,36 @@ const updateServingsController = function (newServings) {
 };
 
 const addBookmarkController = function () {
-  // Add bookmarked recipe to model
+  // Add or remove bookmarked recipe to model
 
   if (!model.state.recipe.bookmarked) model.addBookmarks(model.state.recipe);
   else model.delBookmark(model.state.recipe.id);
 
   // Update the recipe bookmark icon
   recipeView.update(model.state.recipe);
+
+  // Render the bookmarks
+  bookmarkView.render(model.state.bookmarks);
 };
 
+const bookmarksController = function () {
+  bookmarkView.render(model.state.bookmarks);
+};
+
+const controllAddRecipe = function (newRecipe) {
+  console.log(newRecipe);
+
+  // Upload the new recipe
+};
 // Init function
 const init = function () {
+  bookmarkView.addHandlerRender(bookmarksController);
   recipeView.addEventHandler(showRecipeController);
   recipeView.addUpdateServingsHandler(updateServingsController);
   recipeView.addBookmarkHandler(addBookmarkController);
   searchView.addEventHandler(searchRecipeController);
   paginationView.addEventHandler(paginationController);
+  addrecipeView.addHandlerUpload(controllAddRecipe);
 };
 
 init();
