@@ -2,6 +2,7 @@ import View from './view.js';
 import icons from '../../img/icons.svg';
 class AddRecipeView extends View {
   _parentElement = document.querySelector('.upload');
+  _message = 'Recipe was successfully uploaded';
 
   _window = document.querySelector('.add-recipe-window');
   _overlay = document.querySelector('.overlay');
@@ -17,22 +18,22 @@ class AddRecipeView extends View {
   _addHandlerShowWindow() {
     this._btnOpen.addEventListener(
       'click',
-      this._hiddenClassController.bind(this)
+      this.hiddenClassController.bind(this)
     );
   }
 
   _addHandlerRemoveWindow() {
     this._btnClose.addEventListener(
       'click',
-      this._hiddenClassController.bind(this)
+      this.hiddenClassController.bind(this)
     );
     this._overlay.addEventListener(
       'click',
-      this._hiddenClassController.bind(this)
+      this.hiddenClassController.bind(this)
     );
   }
 
-  _hiddenClassController() {
+  hiddenClassController() {
     this._overlay.classList.toggle('hidden');
     this._window.classList.toggle('hidden');
   }

@@ -95,8 +95,25 @@ const bookmarksController = function () {
   bookmarkView.render(model.state.bookmarks);
 };
 
-const controllAddRecipe = function (newRecipe) {
-  console.log(newRecipe);
+const controllAddRecipe = async function (newRecipe) {
+  try {
+    addrecipeView.ShowSpinner();
+    await model.uploadRecipe(newRecipe);
+
+    recipeView.render(model.state.recipe);
+
+    addrecipeView.renderMessage();
+
+    setTimeout(function () {
+      addrecipeView.hiddenClassController();
+    }, 2000);
+
+    bookmarkView.render(model.state.bookmarks);
+
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+  } catch (err) {
+    addrecipeView.renderError(err.message);
+  }
 
   // Upload the new recipe
 };
