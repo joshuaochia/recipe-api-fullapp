@@ -15,6 +15,10 @@ class AddRecipeView extends View {
     this._addHandlerRemoveWindow();
   }
 
+  /**
+   * @author Joshua Ochia
+   * @description Event handler for click open btn
+   */
   _addHandlerShowWindow() {
     this._btnOpen.addEventListener(
       'click',
@@ -22,6 +26,10 @@ class AddRecipeView extends View {
     );
   }
 
+  /**
+   * @author Joshua Ochia
+   * @description Event handler for click close btn and overlay
+   */
   _addHandlerRemoveWindow() {
     this._btnClose.addEventListener(
       'click',
@@ -33,11 +41,20 @@ class AddRecipeView extends View {
     );
   }
 
+  /**
+   * @author Joshua Ochia
+   * @description Refactored fanction for removing or adding hidden class
+   */
   hiddenClassController() {
     this._overlay.classList.toggle('hidden');
     this._window.classList.toggle('hidden');
   }
-
+  /**
+   * @author Joshua Ochia
+   * @returns {undefined}
+   * @param {Function} handler
+   * @description set event handler to current parent element
+   */
   addHandlerUpload(handler) {
     this._parentElement.addEventListener('submit', function (e) {
       e.preventDefault();
