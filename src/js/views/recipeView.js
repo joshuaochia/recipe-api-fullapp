@@ -9,6 +9,12 @@ class RecipeView extends View {
   _errorMessage = ' We could not find that recipe. Please try another one!';
   _message = '';
 
+  /**
+   * @returns {undefined}
+   * @param {Function} handler
+   * @author Joshua Ochia
+   * @description Add event handler for clicking update servings btn
+   */
   addUpdateServingsHandler(handler) {
     this._parentElement.addEventListener('click', function (e) {
       e.preventDefault();
@@ -20,10 +26,12 @@ class RecipeView extends View {
     });
   }
 
-  addEventHandler(handler) {
-    this._handlerList.forEach(event => window.addEventListener(event, handler));
-  }
-
+  /**
+   * @returns {undefined}
+   * @param {Function} handler
+   * @author Joshua Ochia
+   * @description Add event handler for clicking the bookmark btn
+   */
   addBookmarkHandler(handler) {
     this._parentElement.addEventListener('click', function (e) {
       e.preventDefault();
@@ -35,6 +43,23 @@ class RecipeView extends View {
     });
   }
 
+  /**
+   * @returns {undefined}
+   * @param {Function} handler
+   * @author Joshua Ochia
+   * @description Add event handler for hashchange and load
+   */
+  addEventHandler(handler) {
+    this._handlerList.forEach(event => window.addEventListener(event, handler));
+  }
+
+  /**
+   *
+   * @param {Array} ingridients
+   * @returns {string}
+   * @author Joshua Ochia
+   * @description Returns a huge collection of li HTML (Base on length of ingredients)
+   */
   _generateIngredientMarkup(ingridients) {
     return ingridients
       .map(ing => {
@@ -54,9 +79,12 @@ class RecipeView extends View {
       .join('');
   }
 
+  /**
+   *
+   * @returns {String}
+   * @author Joshua Ochia
+   */
   _generateMarkup() {
-    //   Goal of this method is to return a large html string for rendering a recipe
-
     return `
     <figure class="recipe__fig">
       <img src="${this._data.imageURL}" alt="Tomato" class="recipe__img" />

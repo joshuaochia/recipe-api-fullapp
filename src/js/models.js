@@ -12,6 +12,8 @@ import {
   API_KEY,
 } from './config.js';
 
+///////////////////////////////////////////////////////////////////// Code start here
+
 // Temporary state (Data storing model)
 export const state = {
   recipe: {},
@@ -24,6 +26,12 @@ export const state = {
   bookmarks: [],
 };
 
+/**
+ * @author Joshua Ochia
+ * @param {Object} data
+ * @returns {Object}
+ * @description return an object from destructured data
+ */
 const createRecipeObject = function (data) {
   const { recipe } = data.data;
   return {
@@ -39,7 +47,12 @@ const createRecipeObject = function (data) {
   };
 };
 
-// Fetching the recipe data from API
+/**
+ * @author Joshua Ochia
+ * @param {String} id
+ * @returns {undefined}
+ * @description fetch data from api and create an recipe object
+ */
 export const recipeModel = async function (id) {
   try {
     const data = await helper.AJAX(`/${id}?key=${API_KEY}`);
@@ -52,7 +65,12 @@ export const recipeModel = async function (id) {
   }
 };
 
-// Search recipes through query from user to API
+/**
+ * @author Joshua Ochia
+ * @param {String} query
+ * @returns {undefined}
+ * @description fetch data from api and list of recipe results
+ */
 export const searchModel = async function (query) {
   try {
     const data = await helper.AJAX(`?search=${query}&key=${API_KEY}`);
@@ -71,7 +89,12 @@ export const searchModel = async function (query) {
   state.search.page = START_PAGINATION_PAGE;
 };
 
-// Helper function for pagination
+/**
+ * @author Joshua Ochia
+ * @param {Array} query
+ * @returns {undefined}
+ * @description Helper function for pagination
+ */
 export const goToPage = function (page = state.search.page) {
   state.search.page = page;
   const start = (page - 1) * RESULT_PER_PAGE;

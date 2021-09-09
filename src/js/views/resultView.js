@@ -1,5 +1,4 @@
 import View from './view.js';
-import icons from '../../img/icons.svg';
 import previewView from './previewView.js';
 
 class ResultView extends View {
@@ -9,6 +8,8 @@ class ResultView extends View {
   _message = '';
 
   _generateMarkup() {
+    // The behavior of this method is quite different from other markup
+    // as it uses a class to render the markup from this._data
     return this._data
       .map(searchResult => previewView.render(searchResult, false))
       .join('');

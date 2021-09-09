@@ -9,8 +9,6 @@ export const timeout = function (s) {
   });
 };
 
-// const URL = `https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886`;
-
 export const AJAX = async function (url, uploadData = undefined) {
   try {
     const fetchPro = uploadData
@@ -33,33 +31,3 @@ export const AJAX = async function (url, uploadData = undefined) {
     throw err;
   }
 };
-
-// export const sendJSON = async function (url, uploadData) {
-//   try {
-//     const res = await fetch(`${url}`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(uploadData),
-//     });
-//     const data = await res.json();
-//     if (!res.ok)
-//       throw new Error(`${data.message}, ${res.statusText}:(${res.status})`);
-//     return data;
-//   } catch (err) {
-//     throw err;
-//   }
-// };
-
-// export const renderRecipeJSON = async function (id) {
-//   try {
-//     const res = await fetch(`${API_URL}${id}`);
-//     const data = await res.json();
-//     if (!res.ok)
-//       throw new Error(`${data.message}, ${res.statusText}:(${res.status})`);
-//     return data;
-//   } catch (err) {
-//     throw err;
-//   }
-// };
