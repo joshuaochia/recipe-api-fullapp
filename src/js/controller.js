@@ -1,20 +1,19 @@
 // Runtime import
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-import { async } from 'regenerator-runtime/runtime';
+import "regenerator-runtime/runtime";
+import { async } from "regenerator-runtime/runtime";
 
 // Model state import
-import * as model from './models.js';
+import * as model from "./models.js";
 
 // View import
-import recipeView from './views/recipeView.js';
-import searchView from './views/searchView';
-import resultView from './views/resultView.js';
-import paginationView from './views/paginationView.js';
-import bookmarkView from './views/bookmarksView.js';
-import addrecipeView from './views/addrecipeView';
+import recipeView from "./views/recipeView.js";
+import searchView from "./views/searchView";
+import resultView from "./views/resultView.js";
+import paginationView from "./views/paginationView.js";
+import bookmarkView from "./views/bookmarksView.js";
+import addrecipeView from "./views/addrecipeView";
 
-/////////////////////////////////////// Code start here
+////////////////////////////////////// Code start here
 
 /**
  * @author Joshua Ochia
@@ -154,7 +153,7 @@ const controllAddRecipe = async function (newRecipe) {
     bookmarkView.render(model.state.bookmarks);
 
     // 7. Change the hash for new recipe to be render
-    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+    window.history.pushState(null, "", `#${model.state.recipe.id}`);
   } catch (err) {
     addrecipeView.renderError(err.message);
   }
